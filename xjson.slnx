@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/lib/">
+    <Project Path="Abstractions\Abstractions.csproj" />
+    <Project Path="XJson.Generator\XJson.Generator.csproj" />
+  </Folder>
+  <Folder Name="/sample/">
+    <Project Path="SampleApp\SampleApp.csproj" />
+  </Folder>
+</Solution>

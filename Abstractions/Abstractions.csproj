@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Neemle.XJson.Abstractions</AssemblyName>
+    <RootNamespace>Neemle.XJson.Abstractions</RootNamespace>
+    <PackageId>Neemle.XJson.Abstractions</PackageId>
+    <Authors>Neemle</Authors>
+    <Company>Neemle</Company>
+    <Product>XJson</Product>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Description>Attributes for the Neemle.XJson incremental source generator.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>json;source-generator;attributes</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="" Link="README.md" />
+  </ItemGroup>
+</Project>

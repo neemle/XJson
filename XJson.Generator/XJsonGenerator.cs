@@ -204,12 +204,31 @@ public sealed class XJsonGenerator : IIncrementalGenerator
         {
             case SpecialType.System_String:
                 return $"writer.WriteStringValue(value.{property.Name});";
+            case SpecialType.System_Boolean:
+                return $"writer.WriteBooleanValue(value.{property.Name});";
             case SpecialType.System_Int32 or SpecialType.System_Int64 or SpecialType.System_Int16 or SpecialType.System_Byte:
+                return $"writer.WriteNumberValue(value.{property.Name});";
+            case SpecialType.System_UInt32 or SpecialType.System_UInt64 or SpecialType.System_UInt16 or SpecialType.System_SByte:
+                return $"writer.WriteNumberValue(value.{property.Name});";
+            case SpecialType.System_Single:
+                return $"writer.WriteNumberValue(value.{property.Name});";
+            case SpecialType.System_Double:
+                return $"writer.WriteNumberValue(value.{property.Name});";
+            case SpecialType.System_Decimal:
                 return $"writer.WriteNumberValue(value.{property.Name});";
         }
 
+        if (type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) == "global::System.Guid")
+            return $"writer.WriteStringValue(value.{property.Name}.ToString());";
+
+        if (type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) == "global::System.DateTime")
+            return $"writer.WriteStringValue(value.{property.Name}.ToString(\"O\"));";
+
+        if (type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) == "global::System.TimeSpan")
+            return $"writer.WriteStringValue(value.{property.Name}.ToString());";
+
         if (!allTypes.Any(t => SymbolEqualityComparer.Default.Equals(t, type)))
-            return $"JsonSerializer.Serialize(writer, value.{property.Name}, options);";
+            return "throw new NotSupportedException(\"Unsupported property type for XJson; only primitives, Guid, DateTime, TimeSpan, or other [XJson] types are supported.\");";
         var converterName = GetConverterName((INamedTypeSymbol)type);
         return $"new {converterName}().Write(writer, value.{property.Name}, options);";
 
@@ -223,13 +242,24 @@ public sealed class XJsonGenerator : IIncrementalGenerator
         return type.SpecialType switch
         {
             SpecialType.System_String => "reader.GetString()!",
+            SpecialType.System_Boolean => "reader.GetBoolean()",
             SpecialType.System_Int32 => "reader.GetInt32()",
             SpecialType.System_Int64 => "reader.GetInt64()",
             SpecialType.System_Int16 => "reader.GetInt16()",
             SpecialType.System_Byte => "reader.GetByte()",
+            SpecialType.System_UInt32 => "reader.GetUInt32()",
+            SpecialType.System_UInt64 => "reader.GetUInt64()",
+            SpecialType.System_UInt16 => "reader.GetUInt16()",
+            SpecialType.System_SByte => "reader.GetSByte()",
+            SpecialType.System_Single => "reader.GetSingle()",
+            SpecialType.System_Double => "reader.GetDouble()",
+            SpecialType.System_Decimal => "reader.GetDecimal()",
+            _ when type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) == "global::System.Guid" => "Guid.Parse(reader.GetString()!)",
+            _ when type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) == "global::System.DateTime" => "DateTime.Parse(reader.GetString()!)",
+            _ when type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) == "global::System.TimeSpan" => "TimeSpan.Parse(reader.GetString()!)",
             _ => allTypes.Any(t => SymbolEqualityComparer.Default.Equals(t, type))
                 ? $"new {GetConverterName((INamedTypeSymbol)type)}().Read(ref reader, typeof({typeName}), options)!"
-                : $"JsonSerializer.Deserialize<{typeName}>(ref reader, options)!"
+                : "throw new NotSupportedException(\"Unsupported property type for XJson; only primitives, Guid, DateTime, TimeSpan, or other [XJson] types are supported.\")"
         };
     }
 

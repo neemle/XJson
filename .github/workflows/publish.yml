@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     tags:
-      - "v*"
+      - "*"
   workflow_dispatch:
 
 env:
@@ -16,11 +16,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x"
+
+      - name: Determine package version from tag
+        id: version
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          if [ -z "$TAG" ]; then
+            echo "This workflow must be triggered by a tag; GITHUB_REF_NAME is empty."
+            exit 1
+          fi
+          # Strip any leading non-digit characters (like v, rel-, lib-)
+          VERSION="$(printf "%s" "$TAG" | sed -E 's/^[^0-9]*([0-9].*)/\1/')"
+          if [ -z "$VERSION" ]; then
+            echo "Failed to parse version from tag '$TAG'"
+            exit 1
+          fi
+          echo "Using package version: $VERSION (from tag '$TAG')"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Restore
         run: |
@@ -29,8 +49,10 @@ jobs:
 
       - name: Pack
         run: |
-          dotnet pack Abstractions/Abstractions.csproj -c Release -o ./artifacts
-          dotnet pack XJson.Generator/XJson.Generator.csproj -c Release -o ./artifacts
+          VERSION="${{ steps.version.outputs.version }}"
+          echo "Packing with version: $VERSION"
+          dotnet pack Abstractions/Abstractions.csproj -c Release -o ./artifacts -p:Version=$VERSION -p:PackageVersion=$VERSION
+          dotnet pack XJson.Generator/XJson.Generator.csproj -c Release -o ./artifacts -p:Version=$VERSION -p:PackageVersion=$VERSION
 
       - name: Publish to NuGet
         env:

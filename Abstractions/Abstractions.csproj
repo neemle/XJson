@@ -17,4 +17,9 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>json;source-generator;attributes</PackageTags>
   </PropertyGroup>
+  
+  <!-- Ensure the README is included in the NuGet package so PackageReadmeFile is valid -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>

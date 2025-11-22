@@ -12,9 +12,7 @@
     <Authors>Neemle</Authors>
     <Company>Neemle</Company>
     <Product>XJson</Product>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-  <Description>Incremental source generator that creates reflection-free System.Text.Json converters for [XJson] types.</Description>
+    <Description>Incremental source generator that creates reflection-free System.Text.Json converters for [XJson] types.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>json;source-generator;roslyn;incremental</PackageTags>

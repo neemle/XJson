@@ -12,13 +12,9 @@
     <Product>XJson</Product>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
-  <Description>Attributes for the Neemle.XJson incremental source generator.</Description>
+    <Description>Attributes for the Neemle.XJson incremental source generator.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>json;source-generator;attributes</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\README.md" Pack="true" PackagePath="" Link="README.md" />
-  </ItemGroup>
 </Project>

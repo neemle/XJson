@@ -6,5 +6,9 @@
   <Folder Name="/sample/">
     <Project Path="SampleApp\SampleApp.csproj" />
   </Folder>
-  <Project Path="XJson.Tests/XJson.Tests.csproj" />
+  <Folder Name="/tests/">
+    <Project Path="XJson.Generator.Tests/XJson.Generator.Tests.csproj" />
+    <Project Path="XJson.Tests/XJson.Tests.csproj" />
+  </Folder>
+  
 </Solution>

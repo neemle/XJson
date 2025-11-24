@@ -8,13 +8,15 @@ The format is inspired by Keep a Changelog, and this project adheres to Semantic
 ## [Unreleased]
 
 ### Added
-- Reflection-free, AOT/NativeAOT-friendly JSON by generating per-type converters for `[XJson]` models.
-- `Neemle.XJson.Generated.Json` helper with `Encode<T>`, `Decode<T>`, and `Validate<T>` APIs.
-- Overloads that accept `JsonSerializerOptions?` to control naming and null handling at runtime.
-- Overloads that accept `JsonSourceGenerationOptionsAttribute?` as a convenient options bag, internally mapped to `JsonSerializerOptions`.
-- Support for `[JsonPropertyName]` on properties; attribute names take precedence over policies.
-- Mapping from `JsonKnownNamingPolicy` to `JsonNamingPolicy` when available on target frameworks (e.g., Snake/Kebab on .NET 8+, TrainCase on .NET 9+).
-- Project README with quick start, configuration, supported types, limitations, and AOT notes.
+- Nothing yet.
+
+## [1.0.2] - 2025-11-24
+
+### Added
+- Design-time stub for `Neemle.XJson.Generated.Json` that surfaces the API in IDEs when no `[XJson]` types are present, preventing red squiggles without enabling reflection at runtime.
+
+### Changed
+- Generator now emits a typed throw-only helper at design time instead of a `JsonSerializer`-based fallback, keeping runtime paths reflection-free.
 
 ### Changed
 - Removed reliance on `JsonSerializerContext` and STJ’s source generator; the XJson generator now emits its own converters and dispatch logic.

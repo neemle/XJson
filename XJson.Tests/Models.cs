@@ -42,3 +42,18 @@ public class WithWeirdNames
 {
     public string HomeCity { get; set; } = string.Empty;
 }
+
+[XJson]
+public class WithPrimitives
+{
+    public bool Active { get; set; }
+    public long Total { get; set; }
+    public bool? IsFlagged { get; set; }
+    public long? OptionalCount { get; set; }
+}
+
+[XJson]
+public class ParentWithChild
+{
+    public Address Home { get; set; } = null!;
+}

@@ -6,7 +6,7 @@ namespace Neemle.XJson.Sample;
 [XJson]
 public class Person
 {
-    [JsonPropertyName("a")]
+    [JsonPropertyName("a")] // overwrite the property name here
     public string Name { get; set; } = string.Empty;
     
     public string Surname { get; set; } = string.Empty;

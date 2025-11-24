@@ -31,20 +31,11 @@
     <IlcDisableRuntimeMarshalling>true</IlcDisableRuntimeMarshalling>
 
     <CompilerGeneratedFilesOutputPath>obj/Generated</CompilerGeneratedFilesOutputPath>
-
     <RootNamespace>Neemle.XJson.Sample</RootNamespace>
-
     <AssemblyName>xjson_sample_app</AssemblyName>
-
     <IsPackable>false</IsPackable>
-
     <Company>Neemle</Company>
-
-    <Product>XJson</Product>
-
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-
-    <FileVersion>1.0.1.0</FileVersion>
+    <Product>XJson Sample Application</Product>
   </PropertyGroup>
 
   <ItemGroup>

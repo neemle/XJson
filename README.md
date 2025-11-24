@@ -34,6 +34,10 @@ For each type annotated with `[Neemle.XJson.Abstractions.XJson]`, the generator 
     - `bool Validate<T>(string json, out T? value, out string? error, JsonSerializerOptions? options)`
     - `bool Validate<T>(string json, out T? value, out string? error, JsonSourceGenerationOptionsAttribute? genOptions)`
 
+Design-time experience
+----------------------
+- When no `[XJson]` types are present in the current design-time compilation, the generator emits a minimal throw-only stub for `Neemle.XJson.Generated.Json`. This keeps IntelliSense happy (no missing-type errors) while leaving runtime builds unchanged and reflection-free.
+
 Installation
 ------------
 Add a project reference to the Abstractions and add the Generator as an analyzer to the project(s) where you define your models:
@@ -147,7 +151,6 @@ Property naming precedence
 Supported naming policies from `JsonKnownNamingPolicy` map to `JsonNamingPolicy` when available on your target TFM:
 - Always: `Unspecified` → `null`, `CamelCase` → `JsonNamingPolicy.CamelCase`
 - .NET 8+: `SnakeCaseLower`, `SnakeCaseUpper`, `KebabCaseLower`, `KebabCaseUpper`
-- .NET 9+: `TrainCase`
 
 Supported types (v1)
 --------------------
@@ -163,7 +166,7 @@ Current limitations (throw `NotSupportedException`)
 Null handling
 -------------
 - When `DefaultIgnoreCondition = WhenWritingNull`, reference and `Nullable<T>` properties with `null` are omitted on write.
-- Otherwise they are emitted as `"prop": null`.
+- Otherwise, they are emitted as `"prop": null`.
 
 AOT and trimming notes
 ----------------------
@@ -195,7 +198,7 @@ Q: Can I mix XJson models with regular STJ serialization?
 A: Yes, but XJson’s generated helper only handles `[XJson]` types. For others, use your regular STJ pipeline.
 
 Q: How do I extend supported types?
-A: Extend the generator to handle more primitives/collections/enums, or file an issue/PR.
+A: Extend the generator to handle more primitives / collections / enums or file an issue/PR.
 
 License
 -------

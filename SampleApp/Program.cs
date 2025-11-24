@@ -14,13 +14,14 @@ var person = new Person
     }
 };
 
+// options are not mandatory
 var opt = new JsonSerializerOptions()
 {
     WriteIndented = false,
     PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
 };
 
-string json = Json.Encode(person, opt);
+var json = Json.Encode(person, opt);
 Console.WriteLine("Serialized JSON:");
 Console.WriteLine(json);
 

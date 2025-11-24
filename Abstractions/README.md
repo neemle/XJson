@@ -19,23 +19,11 @@ Using NuGet packages (recommended):
 ```xml
 <ItemGroup>
   <!-- Public attribute(s) used in your code -->
-  <PackageReference Include="Neemle.XJson.Abstractions" Version="1.0.1" />
+  <PackageReference Include="Neemle.XJson.Abstractions" />
 
   <!-- Incremental source generator (build-time only) -->
   <PackageReference Include="Neemle.XJson.Generator"
-                    Version="1.0.1"
                     PrivateAssets="all"
-                    OutputItemType="Analyzer"
-                    ReferenceOutputAssembly="false" />
-</ItemGroup>
-```
-
-From source (local development):
-
-```xml
-<ItemGroup>
-  <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
-  <ProjectReference Include="..\XJson.Generator\XJson.Generator.csproj"
                     OutputItemType="Analyzer"
                     ReferenceOutputAssembly="false" />
 </ItemGroup>
@@ -75,6 +63,7 @@ Notes
 - This package contains no runtime reflection and is trimming / NativeAOT friendly.
 - For configuration, error‑tolerant decode, and more examples, see the root
   project README in the XJson repository.
+- During design-time builds (e.g., IntelliSense), a small stub for `Neemle.XJson.Generated.Json` is included to prevent missing-type errors; it is excluded from normal builds so runtime stays reflection-free.
 
 License
 -------
